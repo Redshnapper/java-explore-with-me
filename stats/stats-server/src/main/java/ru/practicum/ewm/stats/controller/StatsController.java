@@ -23,11 +23,9 @@ public class StatsController {
     @GetMapping("/stats")
     public List<ViewDto> get(@RequestParam @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) LocalDateTime start,
                              @RequestParam @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) LocalDateTime end,
-                             @RequestParam List<String> uris,
+                             @RequestParam(required = false) List<String> uris,
                              @RequestParam(defaultValue = "false") Boolean unique) {
         log.info("start: {}, end: {}, unique: {}", start, end, unique);
-        log.info("uri size: {}", uris.size());
-
         return service.get(start, end, uris, unique);
 
     }
