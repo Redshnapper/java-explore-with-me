@@ -13,15 +13,31 @@ public interface StatsServerRepository extends JpaRepository<EndpointHit, Long> 
 
     @Query(value = "SELECT new ru.practicum.ewm.dto.stats.ViewDto(e.app, e.uri, COUNT(e.ip)) " +
             "FROM EndpointHit AS e " +
-            "WHERE e.date BETWEEN :start AND :end AND e.uri IN (:uris) " +
+            "WHERE e.date BETWEEN :start AND :end " +
+            "AND (:uris) IS NULL OR e.uri IN :uris " +
             "GROUP BY e.app, e.uri " +
             "ORDER BY COUNT(e.ip) DESC")
     List<ViewDto> findStatsByDates(LocalDateTime start, LocalDateTime end, List<String> uris);
 
     @Query(value = "SELECT new ru.practicum.ewm.dto.stats.ViewDto(e.app, e.uri, COUNT(DISTINCT e.ip)) " +
             "FROM EndpointHit AS e " +
-            "WHERE e.date BETWEEN :start AND :end AND e.uri IN (:uris) " +
+            "WHERE e.date BETWEEN :start AND :end " +
+            "AND (:uris) IS NULL OR e.uri IN :uris " +
             "GROUP BY e.app, e.uri " +
             "ORDER BY COUNT(e.ip) DESC")
     List<ViewDto> findStatsByDatesUniqueIp(LocalDateTime start, LocalDateTime end, List<String> uris);
+
+    @Query(value = "SELECT new ru.practicum.ewm.dto.stats.ViewDto(e.app, e.uri, COUNT(DISTINCT e.ip)) " +
+            "FROM EndpointHit AS e " +
+            "WHERE e.date BETWEEN :start AND :end " +
+            "GROUP BY e.app, e.uri " +
+            "ORDER BY COUNT(e.ip) DESC")
+    List<ViewDto> findStatsByDatesUniqueIpWithoutUris(LocalDateTime start, LocalDateTime end);
+
+    @Query(value = "SELECT new ru.practicum.ewm.dto.stats.ViewDto(e.app, e.uri, COUNT(e.ip)) " +
+            "FROM EndpointHit AS e " +
+            "WHERE e.date BETWEEN :start AND :end " +
+            "GROUP BY e.app, e.uri " +
+            "ORDER BY COUNT(e.ip) DESC")
+    List<ViewDto> findStatsByDatesWithoutUris(LocalDateTime start, LocalDateTime end);
 }

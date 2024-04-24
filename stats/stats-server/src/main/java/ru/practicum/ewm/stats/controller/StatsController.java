@@ -25,6 +25,9 @@ public class StatsController {
                              @RequestParam @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) LocalDateTime end,
                              @RequestParam List<String> uris,
                              @RequestParam(defaultValue = "false") Boolean unique) {
+        log.info("start: {}, end: {}, unique: {}", start, end, unique);
+        log.info("uri size: {}", uris.size());
+
         return service.get(start, end, uris, unique);
 
     }
@@ -32,6 +35,7 @@ public class StatsController {
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
     public CreateStatsDto create(@RequestBody @Valid CreateStatsDto createDto) {
+        log.info("ip: {}, app: {}, date: {}, uri: {}", createDto.getIp(), createDto.getApp(), createDto.getDate(), createDto.getUri());
         return service.create(createDto);
     }
 }

@@ -21,15 +21,27 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public List<ViewDto> get(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
-        if (unique.equals(true)) {
+        if (unique) {
+            if (uris == null || uris.isEmpty()) {
+                return repository.findStatsByDatesUniqueIpWithoutUris(start, end);
+            }
             return repository.findStatsByDatesUniqueIp(start, end, uris);
+        } else {
+            if (uris == null || uris.isEmpty()) {
+                return repository.findStatsByDatesWithoutUris(start, end);
+            }
+            return repository.findStatsByDates(start, end, uris);
         }
-        return repository.findStatsByDates(start, end, uris);
     }
+
 
     @Override
     public CreateStatsDto create(CreateStatsDto createDto) {
+
         EndpointHit stats = mapper.toModel(createDto);
+        if (stats.getDate() == null) {
+            stats.setDate(LocalDateTime.now());
+        }
         return mapper.toDto(repository.save(stats));
     }
 
