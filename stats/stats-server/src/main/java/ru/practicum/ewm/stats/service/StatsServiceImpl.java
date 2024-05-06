@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewm.dto.stats.CreateStatsDto;
 import ru.practicum.ewm.dto.stats.ViewDto;
+import ru.practicum.ewm.stats.exception.BadRequestException;
 import ru.practicum.ewm.stats.mapper.StatsMapper;
 import ru.practicum.ewm.stats.model.EndpointHit;
 import ru.practicum.ewm.stats.repository.StatsServerRepository;
@@ -22,6 +23,10 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public List<ViewDto> get(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+        if (start.isAfter(end)) {
+            throw new BadRequestException("Неправильно указаны даты");
+        }
+
         if (uris != null && !uris.isEmpty()) {
             uris = uris.stream()
                     .map(uri -> uri.replace("[", "").replace("]", ""))
