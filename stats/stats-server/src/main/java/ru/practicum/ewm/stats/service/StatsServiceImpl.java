@@ -10,6 +10,7 @@ import ru.practicum.ewm.stats.repository.StatsServerRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -21,6 +22,12 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public List<ViewDto> get(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+        if (uris != null && !uris.isEmpty()) {
+            uris = uris.stream()
+                    .map(uri -> uri.replace("[", "").replace("]", ""))
+                    .collect(Collectors.toList());
+        }
+
         if (unique) {
             if (uris == null || uris.isEmpty()) {
                 return repository.findStatsByDatesUniqueIpWithoutUris(start, end);
@@ -37,13 +44,10 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     public CreateStatsDto create(CreateStatsDto createDto) {
-
         EndpointHit stats = mapper.toModel(createDto);
         if (stats.getDate() == null) {
             stats.setDate(LocalDateTime.now());
         }
         return mapper.toDto(repository.save(stats));
     }
-
-
 }
