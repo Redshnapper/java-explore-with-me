@@ -50,7 +50,7 @@ public class EventPrivateController {
     public EventFullDto updateEvent(@PathVariable long userId,
                                     @PathVariable long eventId,
                                     @Valid @RequestBody UpdateEventUserRequest userRequest) {
-        log.info("Обновление события инициатором: {}", userRequest);
+        log.debug("Обновление события инициатором: {}", userRequest);
         return eventService.updateByInitiator(userId, eventId, userRequest);
     }
 
@@ -66,7 +66,7 @@ public class EventPrivateController {
     public EventRequestStatusUpdateResult updateStatusOfRequests(@PathVariable Long userId,
                                                                  @PathVariable Long eventId,
                                                                  @Valid @RequestBody EventRequestStatusUpdateRequest statusUpdateRequest) {
-        log.info("Обновление статусов запросов на участие: {}", statusUpdateRequest);
+        log.debug("Обновление статусов запросов на участие: {}", statusUpdateRequest);
         return eventService.updateRequestsStatus(userId, eventId, statusUpdateRequest);
     }
 }

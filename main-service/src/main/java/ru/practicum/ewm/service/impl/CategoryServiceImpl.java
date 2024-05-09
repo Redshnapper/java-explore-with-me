@@ -41,14 +41,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-
     public CategoryDto getById(Long catId) {
         Category category = getCategory(catId);
         return mapper.toDto(category);
     }
 
     @Override
-
     public List<CategoryDto> getAll(int from, int size) {
         Pageable pageable = PageRequest.of(from / size, size);
         List<Category> categories = repository.findAll(pageable).getContent();

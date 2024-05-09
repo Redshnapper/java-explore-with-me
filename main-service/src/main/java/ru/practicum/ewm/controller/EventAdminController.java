@@ -41,7 +41,7 @@ public class EventAdminController {
     @PatchMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto update(@PathVariable Long eventId, @Valid @RequestBody UpdateEventAdminRequest adminRequest) {
-        log.info("Обновление события администратором= {}, eventId= {}", adminRequest, eventId);
+        log.debug("Обновление события администратором= {}, eventId= {}", adminRequest, eventId);
         return eventService.updateByAdmin(adminRequest, eventId);
     }
 }

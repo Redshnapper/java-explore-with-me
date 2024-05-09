@@ -33,7 +33,7 @@ public class RequestPrivateController {
     @PatchMapping("/{requestId}/cancel")
     @ResponseStatus(HttpStatus.OK)
     public ParticipationRequestDto cancel(@PathVariable Long userId, @PathVariable Long requestId) {
-        log.info("Отмена запроса на участие, requestId= {}", requestId);
+        log.debug("Отмена запроса на участие, requestId= {}", requestId);
         return requestService.cancelUserRequest(userId, requestId);
     }
 }

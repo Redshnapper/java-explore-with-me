@@ -29,7 +29,7 @@ public class CompilationAdminController {
     @ResponseStatus(HttpStatus.OK)
     public CompilationDto updateCompilation(@PathVariable Long id,
                                             @Valid @RequestBody UpdateCompilationRequest compilationRequest) {
-        log.info("Обновление подборки событий= {}", compilationRequest);
+        log.debug("Обновление подборки событий= {}", compilationRequest);
         return compilationService.update(id, compilationRequest);
     }
 
