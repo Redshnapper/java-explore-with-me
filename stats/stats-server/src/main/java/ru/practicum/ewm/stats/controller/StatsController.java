@@ -25,15 +25,15 @@ public class StatsController {
                              @RequestParam @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) LocalDateTime end,
                              @RequestParam(required = false) List<String> uris,
                              @RequestParam(defaultValue = "false") Boolean unique) {
-        log.info("start: {}, end: {}, unique: {}", start, end, unique);
+        log.info("Получение статистики: start= {}, end= {}, unique= {}", start, end, unique);
         return service.get(start, end, uris, unique);
-
     }
 
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
     public CreateStatsDto create(@RequestBody @Valid CreateStatsDto createDto) {
-        log.info("ip: {}, app: {}, date: {}, uri: {}", createDto.getIp(), createDto.getApp(), createDto.getDate(), createDto.getUri());
+        log.info("Сохранение статистики: ip= {}, app= {}, date= {}, uri= {}",
+                createDto.getIp(), createDto.getApp(), createDto.getDate(), createDto.getUri());
         return service.create(createDto);
     }
 }
