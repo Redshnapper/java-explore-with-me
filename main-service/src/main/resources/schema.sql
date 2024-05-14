@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users,categories,locations,events,participation_requests,compilations,compilations_events CASCADE;
+DROP TABLE IF EXISTS users,categories,locations,events,participation_requests,compilations,compilations_events,comments CASCADE;
 
 CREATE TABLE IF NOT EXISTS users
 (
@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS locations
     lon FLOAT NOT NULL
 );
 
+
 CREATE TABLE IF NOT EXISTS events
 (
     id                 BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -41,6 +42,18 @@ CREATE TABLE IF NOT EXISTS events
     CONSTRAINT fk_events_to_users FOREIGN KEY (initiator_id) REFERENCES users (id),
     CONSTRAINT fk_events_to_categories FOREIGN KEY (category_id) REFERENCES categories (id),
     CONSTRAINT fk_events_to_locations FOREIGN KEY (location_id) REFERENCES locations (id)
+);
+
+CREATE TABLE IF NOT EXISTS comments
+(
+    id           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    author_id    BIGINT                      NOT NULL,
+    event_id     BIGINT                      NOT NULL,
+    text         VARCHAR                     NOT NULL,
+    created_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+
+    CONSTRAINT fk_comments_to_events FOREIGN KEY (event_id) REFERENCES events (id),
+    CONSTRAINT fk_comments_to_users FOREIGN KEY (author_id) REFERENCES users (id)
 );
 
 CREATE TABLE IF NOT EXISTS participation_requests

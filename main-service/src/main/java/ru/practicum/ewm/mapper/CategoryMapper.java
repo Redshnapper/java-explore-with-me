@@ -6,7 +6,9 @@ import ru.practicum.ewm.model.Category;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+
+@Mapper(componentModel = SPRING)
 public interface CategoryMapper {
 
     CategoryDto toDto(Category category);

@@ -21,10 +21,6 @@ public class StatsClientConfig {
     @Bean
     @Primary
     public StatsClient statClient() {
-        return statClient(statServerUrl);
-    }
-
-    private StatsClient statClient(String statServerUrl) {
         return new StatsClient(statServerUrl, builder);
     }
 }

@@ -9,7 +9,9 @@ import ru.practicum.ewm.model.Event;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+
+@Mapper(componentModel = SPRING)
 public interface CompilationMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "events", source = "events")

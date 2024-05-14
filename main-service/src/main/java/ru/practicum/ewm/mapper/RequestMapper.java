@@ -7,7 +7,9 @@ import ru.practicum.ewm.model.ParticipationRequest;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+
+@Mapper(componentModel = SPRING)
 public interface RequestMapper {
     @Mapping(target = "requester", source = "participationRequest.requester.id")
     @Mapping(target = "event", source = "participationRequest.event.id")
