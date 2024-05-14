@@ -2,7 +2,6 @@ package ru.practicum.ewm.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import ru.practicum.ewm.constants.Constants;
 import ru.practicum.ewm.enums.EventState;
 import ru.practicum.ewm.model.Location;
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventFullDto {
     String annotation;
     CategoryDto category;

@@ -11,7 +11,9 @@ import ru.practicum.ewm.model.Location;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+
+@Mapper(componentModel = SPRING)
 public interface EventMapper {
 
     @Mapping(target = "category", source = "category")
